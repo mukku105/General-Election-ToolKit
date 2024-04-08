@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% block title %} Login {% endblock %}
+{% endblock %}
+
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center py-4 ">
+    <div class="form-signin w-100 m-auto ">
+
+        <form action="{{ url_for_security('login') }}" method="post">
+            <img class="mb-4" src="{{ url_for('static', filename='img/toolkit_img.png') }}" alt="Logo" >
+            <h1 class="h3 mb-3 fw-normal">Login to access ToolKit</h1>
+            {{ login_user_form.hidden_tag() }}
+
+            {% if login_user_form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ login_user_form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" name="email" placeholder="test@test.com">
+                <label for="email">Email</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <label for="password">Password</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2">LOGIN</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

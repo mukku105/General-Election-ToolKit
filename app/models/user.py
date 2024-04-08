@@ -1,8 +1,8 @@
+import datetime
 import uuid
 from app.extensions import db
 
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_security import UserMixin, RoleMixin
+from flask_security import UserMixin, RoleMixin, hash_password
 
 
 roles_users = db.Table('roles_users',
@@ -12,9 +12,9 @@ roles_users = db.Table('roles_users',
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    phone_no = db.Column(db.String(12), unique=True, nullable=False)
     full_name = db.Column(db.String(255), nullable=False)
-    phone_no = db.Column(db.String(255), nullable=False)
     fs_uniquifier = db.Column(db.String(255), nullable=False)
     confirmed_at = db.Column(db.DateTime())
     password = db.Column(db.String(120), nullable=False)
@@ -26,8 +26,8 @@ class User(db.Model, UserMixin):
         return '<User %r>' % self.username
     
     def set_password(self, password):
-        self.password = generate_password_hash(password, method='pbkdf2:sha256')
-    
+        self.password = hash_password(password)
+        
     def set_uuid(self):
         self.fs_uniquifier = str(uuid.uuid4())
     

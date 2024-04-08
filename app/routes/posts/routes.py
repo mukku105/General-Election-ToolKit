@@ -6,8 +6,4 @@ from app.models.post import Post
 @bp.route('/')
 def index():
     posts = Post.query.all()
-    return render_template('posts/index.html', posts=posts)
-
-@bp.route('/categories/')
-def categories():
-    return render_template('posts/categories.html')
+    return render_template('archive/posts/index.html', posts=posts)

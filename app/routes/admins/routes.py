@@ -1,4 +1,5 @@
 from flask import render_template
+from flask_login import login_required
 
 from app.routes.admins import bp
 from app.extensions import db

@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+
 {% block content %}
     <span class="title">
         <h1>{% block title %} Questions {% endblock %}</h1>

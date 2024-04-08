@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %} Polling Station {% endblock %}
+
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="mt-2 mb-4 d-flex justify-content-between align-items-center">
+        <h1 class="display-6">Polling Station Electors' Details</h1>
+        <!-- import excel btn modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcelModal">
+            Import Excel
+        </button>
+    </div>
+    <!-- import form modal -->
+
+    <div class="modal fade" id="importExcelModal" tabindex="-1" aria-labelledby="importExcelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importExcelModalLabel">Import Excel File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ url_for('toolkit.ps_import') }}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" id="file">
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="polling-station-details">
+        <table class="table table-striped table-hover table-responsive"
+            data-toggle="table"
+            data-toolbar=".toolbar"
+            data-sortable="true"
+            data-show-footer="true">
+            <thead style="font-size: 12px;">
+                <tr>
+                    <th>Sl<br>No</th>
+                    <th data-sortable="true">PART<br>NO</th>
+                    <th data-sortable="true">PART<br>NAME</th>
+                    <th data-sortable="true">PS<br>NO</th>
+                    <th data-sortable="true">PS<br>NAME</th>
+                    <th data-sortable="true">PS<br>TYPE</th>
+                    <th data-sortable="true">PS<br>CATEGORY</th>
+                    <th data-sortable="true">LOC<br>TYPE</th>
+                    <th data-sortable="true">ELECTORS<br>MALE</th>
+                    <th data-sortable="true">ELECTORS<br>FEMALE</th>
+                    <th data-sortable="true">ELECTORS<br>OTHER</th>
+                    <th data-sortable="true">ELECTORS<br>TOTAL</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody style="font-size: 12px;">
+                {% for ps in p_station %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ ps.part_no }}</td>
+                        <td>{{ ps.part_name }}</td>
+                        <td>{{ ps.ps_no }}</td>
+                        <td>{{ ps.ps_name }}</td>
+                        <td>{{ ps.ps_type }}</td>
+                        <td>{{ ps.ps_category }}</td>
+                        <td>{{ ps.location_type }}</td>
+                        <td>{{ ps.electors_male }}</td>
+                        <td>{{ ps.electors_female }}</td>
+                        <td>{{ ps.electors_other }}</td>
+                        <td>{{ ps.electors_total }}</td>
+                        <td style="width: 10px;">
+                            <button class="btn btn-outline-info btn-sm">
+                                <img src="{{ url_for('static', filename='img/icons/pencil-square.svg') }}" 
+                                        alt="edit" 
+                                        style="width: 15px; height: 15px;">
+                            </button><br>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <img src="{{ url_for('static', filename='img/icons/trash.svg') }}" 
+                                        alt="delete" 
+                                        style="width: 15px; height: 15px;">
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="8">Total</th>
+                    <td>{{ el_grand_total.mtotal }}</td>
+                    <td>{{ el_grand_total.ftotal }}</td>
+                    <td>{{ el_grand_total.ototal }}</td>
+                    <td colspan="2">{{ el_grand_total.gtotal }}</td>
+                </tr>
+            </tfoot>
+        </table>
+
+                    
+    </div>
+{% endblock %}

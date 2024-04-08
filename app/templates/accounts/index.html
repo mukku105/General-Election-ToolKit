@@ -1,5 +1,33 @@
 {% extends 'base.html' %}
 
+{% block title %} Accounts {% endblock %}
+
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+
 {% block content %}
-    <h2>This is the accounts index blueprint.</h2>
+<div class="mt-2">
+    {% if current_user.is_authenticated %}
+    <h1 class="display-6">Hi, {{ current_user.email }}.</h1>
+    <!-- display role -->
+    <div class="alert alert-info" role="alert">
+        <strong>Info!</strong> You are currently assigned these roles:
+        <ol class="list-group list-group-numbered">
+            {% for role in current_user.roles %}
+            <li class="list-group-item">{{ role.name }}  <span>/ {{role.description}}</span></li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% else %}
+    <div class="alert alert-warning " role="alert">
+        <span>You are not logged in.</span>
+        <div>
+            <a href="{{ url_for('security.login') }}" class="alert-link">Login</a> to access your account.
+        </div>
+    </div>
+    {% endif %}
+
+    
+</div>
 {% endblock %}

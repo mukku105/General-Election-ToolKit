@@ -15,5 +15,5 @@ def index():
         db.session.add(question)
         db.session.commit()
 
-        return redirect(url_for('questions.index'))
-    return render_template('questions/index.html', questions=questions)
+        return redirect(url_for('archive/questions.index'))
+    return render_template('archive/questions/index.html', questions=questions)

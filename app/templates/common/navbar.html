@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg sticky-top p-2" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='img/toolkit_img_bg.png') }}" alt="Logo" width="160"
+                class="d-inline-block align-text-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('main.index') }}">Dashboard</a>
+                </li>
+                <!-- li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('posts.index') }}">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('questions.index') }}">Questions</a>
+                </li -->
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('toolkit.ps') }}">Polling Stations</a>
+                </li>
+                {% if current_user.has_role('admin') %}
+                    {% include 'common/nav_item_admin.html' %}
+                {% endif %}
+                {% endif %}
+
+            </ul>
+            <span>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('accounts.index') }}" class="btn btn-outline-primary">Hi, {{ current_user.email }}
+                    {% for role in current_user.roles %}
+                        {% if 'ac_' in role.name %}
+                            <span>| AC {{ role.name.split('_')[1] }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </a>
+                    {% if current_user.has_role('admin') %}
+                    <a href="{{ url_for('admin.index') }}" class="btn btn-outline-success">Admin</a>
+                    {% endif %}
+                    <a href="{{ url_for('security.logout') }}" class="btn btn-outline-danger">Logout</a>
+                {% else %}
+                <a href="{{ url_for('security.login') }}" class="btn btn-outline-primary">Login</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</nav>

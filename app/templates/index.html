@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% block title %} Dashboard {% endblock %}
+
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
 
 {% block content %}
-    <span class="title"><h1>{% block title %} The Home Page of FlaskApp {% endblock %}</h1></span>
-    <div class="content">
-        <h2>This is the main Flask blueprint</h2>
-    </div>
+<div class="mt-2 text-center">
+    <img src="{{ url_for('static', filename='img/toolkit_img.png') }}" alt="Logo" class="">
+    <h1 class="display-3">General Election ToolKit</h1>
+</div>
 {% endblock %}

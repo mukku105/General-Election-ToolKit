@@ -9,7 +9,7 @@ from flask_security import SQLAlchemyUserDatastore
 
 from app.models.user import User, Role
 from config import Config
-from app.extensions import db, jwt, security, user_datastore
+from app.extensions import db, jwt, security, user_datastore, migrate
 
 from app.flask_admin import initialize_admin
 
@@ -17,8 +17,9 @@ def create_app(config_class=Config):
     app = Flask(__name__, static_folder='static')
     app.config.from_object(config_class)
 
-    # Initialize Flask extensions here
+    # Initialize Flask extensions here 
     db.init_app(app)
+    migrate.init_app(app, db)
     jwt.init_app(app)
 
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -45,6 +46,9 @@ def create_app(config_class=Config):
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
+
+    from app.routes.toolkit import bp as toolkit_bp
+    app.register_blueprint(toolkit_bp, url_prefix='/toolkit')
 
     @app.route('/test/')
     def test_page():

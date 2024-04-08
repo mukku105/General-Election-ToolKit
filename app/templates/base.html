@@ -1,59 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %} - FlaskApp</title>
-    <style>
-        h2 {
-            width: 100%;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        .title {
-            margin: 5px;
-            width: 100%;
-        }
+    <title>{% block title %} {% endblock %} - Election ToolKit</title>
 
-        .content {
-            margin: 5px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .post {
-            flex: 20%;
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3;
-            inline-size: 100%;
-        }
-
-        .title a {
-            color: #00a36f;
-            text-decoration: none;
-        }
-
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-
-    </style>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.3/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.3/css/bootstrap-table.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main/css/styles.css') }}">
 </head>
+
 <body>
-    <nav>
-        <a href="{{ url_for('main.index') }}">FlaskApp</a>
-        <a href="{{ url_for('posts.index') }}">Posts</a>
-        <a href="{{ url_for('posts.categories') }}">Categories</a>
-        <a href="{{ url_for('questions.index') }}">Questions</a>
-        <a href="{{ url_for('accounts.index') }}">Accounts</a>
-    </nav>
-    <hr>
-    <div class="content">
+    {% block navbar %} {% endblock %}
+    <div class="container">
         {% block content %} {% endblock %}
     </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='jquery-3.7.1/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-5.3.3/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-5.3.3/js/bootstrap-table.min.js') }}"></script>
 </body>
+
 </html>
