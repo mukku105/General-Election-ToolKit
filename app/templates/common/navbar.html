@@ -23,6 +23,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('toolkit.ps') }}">Polling Stations</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('toolkit.elofficers_ac') }}">Communication Plan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('toolkit.ps') }}">Voter Turnout</a>
+                </li>
                 {% if current_user.has_role('admin') %}
                     {% include 'common/nav_item_admin.html' %}
                 {% endif %}

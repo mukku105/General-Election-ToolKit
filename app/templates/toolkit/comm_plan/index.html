@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %} Communication Plan {% endblock %}
+
+{% block navbar %}
+{% include 'common/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="mt-2 mb-4 d-flex justify-content-between align-items-center">
+    <h1 class="display-6">AC Communication Plan</h1>
+    <!-- import excel btn modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcelModal">
+        Import Excel
+    </button>
+</div>
+<!-- import form modal -->
+
+
+<div class="modal fade" id="importExcelModal" tabindex="-1" aria-labelledby="importExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importExcelModalLabel">Import Excel File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body
+            ">
+            <form action="{{ url_for('toolkit.elofficers_ac_import') }}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                <button type="submit" class="btn btn-primary">Import</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="comm-plan-details">
+    <table class="table table-striped table-hover table-responsive" data-toggle="table" data-toolbar=".toolbar"
+        data-sortable="true" data-show-footer="true">
+        <thead style="font-size: 12px;">
+            <tr>
+                <th>Sl<br>No</th>
+                <th data-sortable="true">AC</th>
+                <th data-sortable="true">Designation</th>
+                <th data-sortable="true">Designation Full</th>
+                <th data-sortable="true">NAME</th>
+                <th data-sortable="true">OFFICE</th>
+                <th data-sortable="true">PH NO</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 12px;">
+            {% for officer in ac_election_officers %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{officer.assembly_const_no}}</td>
+                    <td>{{officer.designation}}</td>
+                    <td>{{officer.designation_full}}</td>
+                    <td>{{officer.name}}</td>
+                    <td>{{officer.office}}</td>
+                    <td>{{officer.phone_no}}</td>
+                    <td style="width: 10px;">
+                        <button class="btn btn-outline-info btn-sm">
+                            <img src="{{ url_for('static', filename='img/icons/pencil-square.svg') }}" 
+                                    alt="edit" 
+                                    style="width: 15px; height: 15px;">
+                        </button><br>
+                        <button class="btn btn-outline-danger btn-sm">
+                            <img src="{{ url_for('static', filename='img/icons/trash.svg') }}" 
+                                    alt="delete" 
+                                    style="width: 15px; height: 15px;">
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

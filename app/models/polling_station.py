@@ -1,9 +1,11 @@
 import datetime
 from app.extensions import db
+from app.models.assembly_const import AssemblyConst
+
 
 class PollingStation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ac_no = db.Column(db.Integer)
+    assembly_const_no = db.Column(db.Integer, db.ForeignKey('assembly_const.ac_no'), name='fk_assembly_const_no')
     part_no = db.Column(db.Integer, nullable=False)
     part_name = db.Column(db.String(150))
     ps_no = db.Column(db.Integer, unique=True, nullable=False)

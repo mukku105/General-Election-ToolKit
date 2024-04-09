@@ -9,6 +9,7 @@ from flask_security import current_user
 
 from app.forms.user_password import UserPasswordForm
 from app.models.polling_station import PollingStation
+from app.models.ac_election_officer import AcElectionOfficer
 from app.models.post import Post
 from app.models.user import User, Role
 from app.models.assembly_const import AssemblyConst
@@ -84,21 +85,60 @@ class PostAdmin(AdminProtectedModelView):
     column_filters = ('title', 'content')
 
 class PollingStationAdmin(AdminProtectedModelView):
-    column_list = ('id', 'ac_no', 'part_no', 'part_name', 
+    column_list = ('id', 'assembly_const_no', 'part_no', 'part_name', 
                    'ps_no', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
-                   'electors_male', 'electors_female', 'electors_other', 'electors_total',
-                   'last_updated', 'created_at')
-    form_columns = ('ac_no', 'part_no', 'part_name', 
+                   'electors_male', 'electors_female', 'electors_other', 'electors_total')
+    # form = PollingStationForm
+    form_columns = ('assembly_const_no', 'part_no', 'part_name', 
                    'ps_no', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
                    'electors_male', 'electors_female', 'electors_other', 'electors_total',
                    'last_updated', 'created_at')
     column_searchable_list = ('part_name', 'ps_name', 'ps_type', 'ps_category', 'location_type')
     column_filters = ('part_name', 'ps_name', 'ps_type', 'ps_category', 'location_type')
 
+    # def _ac_formatter(view, context, model, name):
+    #     return model.assembly_const.ac_name
+    
+    # column_formatters = {
+    #     'assembly_const_no': _ac_formatter
+    # }
+
 class AssemblyConstAdmin(AdminProtectedModelView):
-    column_list = ('id', 'ac_no', 'ac_name', 'ac_category', 'remarks', 'state', 'district', 'last_updated', 'created_at')
+    column_list = ('ac_no', 'ac_name', 'ac_category', 'remarks', 'state', 'district', 'last_updated', 'created_at')
     form_columns = ('ac_no', 'ac_name', 'ac_category', 'remarks', 'state', 'district')
     column_searchable_list = ('ac_name', 'ac_category', 'remarks', 'state', 'district')
+
+    form_choices = {
+        'state': [
+            ('Sikkim', 'Sikkim'),
+        ],
+        'district': [
+            ('Gangtok', 'Gangtok'),
+            ('Mangan', 'Mangan'),
+            ('Namchi', 'Namchi'),
+            ('Gyalshing', 'Gyalshing'),
+            ('Pakyong', 'Pakyong'),
+            ('Soreng', 'Soreng'),
+        ],
+    }
+
+    def on_model_change(self, form, model, is_created):
+        if is_created:
+            User.confirmed_at = datetime.datetime.now()
+
+class AcElectionOfficerAdmin(AdminProtectedModelView):
+    column_list = ('id','assembly_const_no', 'designation', 'designation_full', 'name', 'office', 'phone_no', 'remarks', 'last_updated', 'created_at')
+    form_columns = ('assembly_const_no', 'designation', 'designation_full', 'name', 'office', 'phone_no', 'remarks')
+    column_searchable_list = ('designation', 'designation_full', 'name', 'office', 'phone_no', 'remarks')
+
+    # form_choices = {
+    #     'designation': [
+    #         ('RO', 'RO'),
+    #         ('ARO', 'ADM'),
+    #         ('SM', 'DC'),
+    #         ('SPO', 'SPO')
+    #         ]
+    # }
 
     def on_model_change(self, form, model, is_created):
         if is_created:
@@ -125,4 +165,5 @@ def create_flask_admin(app, db):
     flask_admin.add_view(PostAdmin(Post, db.session))
     flask_admin.add_view(PollingStationAdmin(PollingStation, db.session))
     flask_admin.add_view(AssemblyConstAdmin(AssemblyConst, db.session))
+    flask_admin.add_view(AcElectionOfficerAdmin(AcElectionOfficer, db.session))
     flask_admin.add_view(ModelView(Question, db.session))

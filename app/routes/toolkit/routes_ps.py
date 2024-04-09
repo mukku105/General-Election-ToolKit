@@ -1,5 +1,6 @@
 from flask import jsonify, render_template, request, url_for, redirect
 from flask_login import current_user, login_required
+from app.models.assembly_const import AssemblyConst
 from app.routes.toolkit import bp
 from app.extensions import db
 from app.models.user import User
@@ -14,7 +15,7 @@ def ps():
     for role in current_user.roles:
         if role.name.startswith('ac_'):
             ac_no = role.name.split('ac_')[1]
-            p_station = PollingStation.query.filter_by(ac_no=ac_no).all()
+            p_station = PollingStation.query.filter_by(assembly_const_no=ac_no).all()
             break
     
     electors_mtotal = sum([p.electors_male for p in p_station])
@@ -90,7 +91,8 @@ def ps_import():
         p = PollingStation.query.filter_by(part_no=row['PART_NO'], ps_no=row['PS_NO']).first()
         if p is None:
             p = PollingStation()
-            p.ac_no             = ac_no
+
+            p.assembly_const_no = ac_no
             p.part_no           = row['PART_NO']
             p.part_name         = row['PART_NAME']
             p.ps_no             = row['PS_NO']
