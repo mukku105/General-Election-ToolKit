@@ -14,8 +14,8 @@ doc = Document()
 def setup_page(doc, width, height):
     sections = doc.sections
     for section in sections:
-        section.page_width = Mm(width)
-        section.page_height = Mm(height)
+        section.page_width = Mm(height)
+        section.page_height = Mm(width)
     
 def set_margins(doc, top, right, bottom, left):
     sections = doc.sections
@@ -115,29 +115,6 @@ def add_officers_table(officers):
     for cell in hdr_cells:
         cell.paragraphs[0].runs[0].bold = True
 
-    # # Add officers to the table
-    # for i, officer in enumerate(officers, start=1):
-    #     row_cells = table.add_row().cells
-    #     row_cells[0].text = str(i)
-    #     row_cells[0].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-    #     row_cells[0].paragraphs[0].paragraph_format.space_before = Pt(2)
-    #     row_cells[0].paragraphs[0].paragraph_format.space_after = Pt(2)
-
-    #     row_cells[1].text = officer.designation_full
-    #     row_cells[1].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-    #     row_cells[1].paragraphs[0].paragraph_format.space_before = Pt(2)
-    #     row_cells[1].paragraphs[0].paragraph_format.space_after = Pt(2)
-
-    #     row_cells[2].text = officer.name
-    #     row_cells[2].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-    #     row_cells[2].paragraphs[0].paragraph_format.space_before = Pt(2)
-    #     row_cells[2].paragraphs[0].paragraph_format.space_after = Pt(2)
-
-    #     row_cells[3].text = officer.phone_no
-    #     row_cells[3].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-    #     row_cells[3].paragraphs[0].paragraph_format.space_before = Pt(2)
-    #     row_cells[3].paragraphs[0].paragraph_format.space_after = Pt(2)
-
     for i, designation in enumerate(officer_data, start=1):
         if officer_data[designation].__len__() > 1:
             row_cells = table.add_row().cells
@@ -151,7 +128,6 @@ def add_officers_table(officers):
             row_cells[1].paragraphs[0].paragraph_format.space_before = Pt(2)
             row_cells[1].paragraphs[0].paragraph_format.space_after = Pt(2)
 
-            # inner_table = row_cells[2].add_table(rows=officer_data[designation].__len__(), cols=1)
             name = ''
             ph_no = ''
             for j, officer in enumerate(officer_data[designation], start=1):

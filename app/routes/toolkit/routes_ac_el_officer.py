@@ -7,7 +7,7 @@ from app.extensions import db
 from app.models.user import User
 from app.models.polling_station import PollingStation
 from app.models.ac_election_officer import AcElectionOfficer
-from app.helper.generate_comm_plan import generate_comm_plan
+from app.helper.generate_comm_plan_ac import generate_comm_plan
 
 import pandas as pd
 
