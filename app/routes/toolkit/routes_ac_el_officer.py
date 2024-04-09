@@ -1,3 +1,4 @@
+import datetime
 from flask import jsonify, render_template, request, url_for, redirect
 from flask_login import current_user, login_required
 from app.models.assembly_const import AssemblyConst
@@ -6,6 +7,7 @@ from app.extensions import db
 from app.models.user import User
 from app.models.polling_station import PollingStation
 from app.models.ac_election_officer import AcElectionOfficer
+from app.helper.generate_comm_plan import generate_comm_plan
 
 import pandas as pd
 
@@ -103,3 +105,18 @@ def elofficers_ac_import():
 
     db.session.commit()
     return jsonify({'msg': 'Data imported successfully'}), 200
+
+
+@bp.route('/elofficers/ac/gen_comm_plan', methods=['POST'])
+@login_required
+def elofficers_ac_gen_comm_plan():
+    ac_no = request.form.get('ac_no')
+    file_name = 'AC_' + ac_no + '_Election_Officers_List-' + datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.docx'
+    generate_comm_plan(ac_no, file_name)
+
+    return jsonify({
+        'status': 'success',
+        'msg': 'Communication plan generated successfully', 
+        'ac_no': ac_no, 
+        'url': url_for('static', filename='generated_file/comm_plan/' + file_name)
+        }), 200

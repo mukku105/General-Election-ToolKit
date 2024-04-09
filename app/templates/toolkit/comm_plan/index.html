@@ -10,9 +10,20 @@
 <div class="mt-2 mb-4 d-flex justify-content-between align-items-center">
     <h1 class="display-6">AC Communication Plan</h1>
     <!-- import excel btn modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcelModal">
-        Import Excel
-    </button>
+    <span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcelModal">
+            Import Excel
+        </button>
+        <!-- Generate Comm Plan modal -->
+        {% for role in current_user.roles %}
+            {% if 'ac_' in role.name %}
+                <button id="gen_comm_plan" type="button" class="btn btn-warning" data-ac-no="{{ role.name.split('_')[1] }}" data-api-url="{{ url_for('toolkit.elofficers_ac_gen_comm_plan') }}">
+                    Generate Comm. Plan
+                </button>
+            {% endif %}
+        {% endfor %}
+    </span>
+
 </div>
 <!-- import form modal -->
 
@@ -55,7 +66,7 @@
         <tbody style="font-size: 12px;">
             {% for officer in ac_election_officers %}
                 <tr>
-                    <td>{{ loop.index }}</td>
+                    <td><Strong>{{ loop.index }}</Strong></td>
                     <td>{{officer.assembly_const_no}}</td>
                     <td>{{officer.designation}}</td>
                     <td>{{officer.designation_full}}</td>
