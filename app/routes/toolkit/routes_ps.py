@@ -96,6 +96,7 @@ def ps_import():
             p.part_no           = row['PART_NO']
             p.part_name         = row['PART_NAME']
             p.ps_no             = row['PS_NO']
+            p.ps_code           = (ac_no if int(ac_no) > 9 else '0' + ac_no) + '/' + str(row['PART_NO'])
             p.ps_name           = row['PS_NAME_EN']
             p.ps_type           = row['PS_TYPE']
             p.ps_category       = row['PS_CATEGORY']

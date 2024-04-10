@@ -7,7 +7,8 @@ from app.extensions import db
 from app.models.user import User
 from app.models.polling_station import PollingStation
 from app.models.ac_election_officer import AcElectionOfficer
-from app.helper.generate_comm_plan_ac import generate_comm_plan
+from app.helper.generate_comm_plan_ac import generate_comm_plan as generate_comm_plan_ac
+from app.helper.generate_comm_plan_ps import generate_comm_plan as generate_comm_plan_ps
 
 import pandas as pd
 
@@ -107,16 +108,30 @@ def elofficers_ac_import():
     return jsonify({'msg': 'Data imported successfully'}), 200
 
 
-@bp.route('/elofficers/ac/gen_comm_plan', methods=['POST'])
+@bp.route('/elofficers/ac/gen_comm_plan_ac ', methods=['POST'])
 @login_required
 def elofficers_ac_gen_comm_plan():
     ac_no = request.form.get('ac_no')
-    file_name = 'AC_' + ac_no + '_Election_Officers_List-' + datetime.datetime.now().strftime('%Y%m%d%H%M%S')+'.docx'
-    generate_comm_plan(ac_no, file_name)
+    file_name = 'AC_' + ac_no + '_AssemblyConst_Election_Officers_List-' + datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')+'.docx'
+    generate_comm_plan_ac(ac_no, file_name)
 
     return jsonify({
         'status': 'success',
-        'msg': 'Communication plan generated successfully', 
+        'msg': 'Assembly Constituency Communication plan generated successfully', 
+        'ac_no': ac_no, 
+        'url': url_for('static', filename='generated_file/comm_plan/' + file_name)
+        }), 200
+
+@bp.route('/elofficers/ac/gen_comm_plan_ps', methods=['POST'])
+@login_required
+def elofficers_ps_gen_comm_plan():
+    ac_no = request.form.get('ac_no')
+    file_name = 'AC_' + ac_no + '_PollingStation_Officers_List-' + datetime.datetime.now().strftime('%Y-%m-%d-%H%M%S')+'.docx'
+    generate_comm_plan_ps(ac_no, file_name)
+
+    return jsonify({
+        'status': 'success',
+        'msg': 'Polling Station Communication plan generated successfully', 
         'ac_no': ac_no, 
         'url': url_for('static', filename='generated_file/comm_plan/' + file_name)
         }), 200

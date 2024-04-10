@@ -86,19 +86,19 @@ class PostAdmin(AdminProtectedModelView):
 
 class PollingStationAdmin(AdminProtectedModelView):
     column_list = ('id', 'assembly_const_no', 'part_no', 'part_name', 
-                   'ps_no', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
+                   'ps_no', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
                    'electors_male', 'electors_female', 'electors_other', 'electors_total')
     # form = PollingStationForm
     form_columns = ('assembly_const_no', 'part_no', 'part_name', 
                    'ps_no', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
                    'electors_male', 'electors_female', 'electors_other', 'electors_total',
                    'last_updated', 'created_at')
-    column_searchable_list = ('part_name', 'ps_name', 'ps_type', 'ps_category', 'location_type')
-    column_filters = ('part_name', 'ps_name', 'ps_type', 'ps_category', 'location_type')
+    column_searchable_list = ('part_name', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type')
+    column_filters = ('part_name', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type')
 
     # def _ac_formatter(view, context, model, name):
     #     return model.assembly_const.ac_name
-    
+
     # column_formatters = {
     #     'assembly_const_no': _ac_formatter
     # }

@@ -45,6 +45,7 @@
                     <th data-sortable="true">PART<br>NO</th>
                     <th data-sortable="true">PART<br>NAME</th>
                     <th data-sortable="true">PS<br>NO</th>
+                    <th data-sortable="true">PS<br>CODE</th>
                     <th data-sortable="true">PS<br>NAME</th>
                     <th data-sortable="true">PS<br>TYPE</th>
                     <th data-sortable="true">PS<br>CATEGORY</th>
@@ -63,6 +64,7 @@
                         <td>{{ ps.part_no }}</td>
                         <td>{{ ps.part_name }}</td>
                         <td>{{ ps.ps_no }}</td>
+                        <td>{{ ps.ps_code}}</td>
                         <td>{{ ps.ps_name }}</td>
                         <td>{{ ps.ps_type }}</td>
                         <td>{{ ps.ps_category }}</td>
@@ -88,7 +90,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="8">Total</th>
+                    <th colspan="9">Total</th>
                     <td>{{ el_grand_total.mtotal }}</td>
                     <td>{{ el_grand_total.ftotal }}</td>
                     <td>{{ el_grand_total.ototal }}</td>
