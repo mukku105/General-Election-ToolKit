@@ -10,6 +10,8 @@ from flask_security import current_user
 from app.forms.user_password import UserPasswordForm
 from app.models.polling_station import PollingStation
 from app.models.ac_election_officer import AcElectionOfficer
+from app.models.ps_election_officer import PsElectionOfficer
+from app.models.voters_turnout import VotersTurnout
 from app.models.post import Post
 from app.models.user import User, Role
 from app.models.assembly_const import AssemblyConst
@@ -99,6 +101,9 @@ class PollingStationAdmin(AdminProtectedModelView):
     # def _ac_formatter(view, context, model, name):
     #     return model.assembly_const.ac_name
 
+    def on_model_change(self, form, model, is_created):
+        PollingStation.ps_code = f'{(model.assembly_const_no if model.assembly_const_no > 10 else '0' + model.assembly_const_no)}/{model.part_no}'
+
     # column_formatters = {
     #     'assembly_const_no': _ac_formatter
     # }
@@ -144,6 +149,25 @@ class AcElectionOfficerAdmin(AdminProtectedModelView):
         if is_created:
             User.confirmed_at = datetime.datetime.now()
 
+class PsElectionOfficerAdmin(AdminProtectedModelView):
+    column_list = ('id', 'polling_station_code', 'presiding_officer', 'polling_officer_1', 'micro_observers', 'block_level_officer', 'remarks', 'last_updated', 'created_at')
+    form_columns = ('polling_station_code', 'presiding_officer', 'polling_officer_1', 'micro_observers', 'block_level_officer', 'remarks')
+    column_searchable_list = ('presiding_officer', 'polling_officer_1', 'micro_observers', 'block_level_officer', 'remarks')
+
+    def on_model_change(self, form, model, is_created):
+        if is_created:
+            User.confirmed_at = datetime.datetime.now()
+
+# class VotersTurnoutAdmin(AdminProtectedModelView):
+#     column_list = ('id', 'polling_station_code', 
+#                    'turnout_male_1', 'turnout_female_1', 'turnout_other_1',
+#                    'turnout_male_2', 'turnout_female_2', 'turnout_other_2',
+#                    'turnout_male_3', 'turnout_female_3', 'turnout_other_3',
+#                    'turnout_male_4', 'turnout_female_4', 'turnout_other_4',
+#                    'turnout_male_5', 'turnout_female_5', 'turnout_other_5',
+#                    'turnout_male_6', 'turnout_female_6', 'turnout_other_6',
+#                    'turnout_male_sangha', 'turnout_female_sangha', 'turnout_other_sangha',
+#                      'remarks', 'last_updated', 'created_at')
 
 
 def create_flask_admin(app, db):
@@ -159,6 +183,7 @@ def create_flask_admin(app, db):
     #     )
     
     # flask_admin.add_view(ModelView(Post, db.session))
+    flask_admin.add_view(ModelView(Question, db.session))
     flask_admin.add_view(UserAdmin(User, db.session))
     flask_admin.add_view(UserPasswordAdmin(User, db.session, endpoint='UserPassword', name='User Password'))
     flask_admin.add_view(RoleAdmin(Role, db.session))
@@ -166,4 +191,5 @@ def create_flask_admin(app, db):
     flask_admin.add_view(PollingStationAdmin(PollingStation, db.session))
     flask_admin.add_view(AssemblyConstAdmin(AssemblyConst, db.session))
     flask_admin.add_view(AcElectionOfficerAdmin(AcElectionOfficer, db.session))
-    flask_admin.add_view(ModelView(Question, db.session))
+    flask_admin.add_view(PsElectionOfficerAdmin(PsElectionOfficer, db.session))
+    flask_admin.add_view(ModelView(VotersTurnout, db.session))

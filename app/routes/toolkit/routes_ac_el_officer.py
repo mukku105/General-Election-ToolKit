@@ -2,6 +2,7 @@ import datetime
 from flask import jsonify, render_template, request, url_for, redirect
 from flask_login import current_user, login_required
 from app.models.assembly_const import AssemblyConst
+from app.models.ps_election_officer import PsElectionOfficer
 from app.routes.toolkit import bp
 from app.extensions import db
 from app.models.user import User
@@ -16,13 +17,23 @@ import pandas as pd
 @login_required
 def elofficers_ac():
     ac_election_officers = AcElectionOfficer.query.all()
+    ps_election_officers = PsElectionOfficer.query.all()
     for role in current_user.roles:
         if role.name.startswith('ac_'):
             ac_no = role.name.split('ac_')[1]
             ac_election_officers = AcElectionOfficer.query.filter_by(assembly_const_no=ac_no).all()
+            ps_election_officers = PsElectionOfficer.query.with_entities(
+                                            PsElectionOfficer.polling_station_code,
+                                            PollingStation.ps_name,
+                                            PsElectionOfficer.presiding_officer,
+                                            PsElectionOfficer.polling_officer_1,
+                                            PsElectionOfficer.micro_observers,
+                                            PsElectionOfficer.block_level_officer).join(PollingStation).filter(PollingStation.assembly_const_no==ac_no).all()
             break
+
+    print(ps_election_officers)
     
-    return render_template('toolkit/comm_plan/index.html', ac_election_officers=ac_election_officers)
+    return render_template('toolkit/comm_plan/index.html', ac_election_officers=ac_election_officers, ps_election_officers=ps_election_officers)
 
 # @bp.route('/ps/list', methods=['GET', 'POST'])
 # @login_required
@@ -108,7 +119,7 @@ def elofficers_ac_import():
     return jsonify({'msg': 'Data imported successfully'}), 200
 
 
-@bp.route('/elofficers/ac/gen_comm_plan_ac ', methods=['POST'])
+@bp.route('/elofficers/ac/gen_comm_plan_ac', methods=['POST'])
 @login_required
 def elofficers_ac_gen_comm_plan():
     ac_no = request.form.get('ac_no')

@@ -9,6 +9,8 @@ from docx.enum.table import WD_ALIGN_VERTICAL
 
 import roman
 
+from app.models.ps_election_officer import PsElectionOfficer
+
 # Create a new document
 doc = Document()
 
@@ -42,7 +44,7 @@ def generate_comm_plan(ac_no, file_name):
 
     add_heading(ac_text, level=2, font_size=18)
 
-    add_officers_table(get_officers(ac_no))
+    add_officers_table(ac_no)
 
     save_docs(file_name)
 
@@ -55,27 +57,13 @@ def add_heading(text, level=1, font_size=None):
         run.font.size = Pt(font_size)
     heading.paragraph_format.alignment = 1
 
-
-
 def get_officers(ac_no):
-    officers = AcElectionOfficer.query.filter_by(assembly_const_no=ac_no).all()
+    officers = PsElectionOfficer.query.join(PollingStation).filter(PollingStation.assembly_const_no==ac_no).all()
     return officers
 
-def create_data(officers):
-    data = {}
-    for officer in officers:
-        if officer.designation not in data:
-            data[officer.designation] = []
-
-        data[officer.designation].append( {
-            'designation_full': officer.designation_full,
-            'name': officer.name + ', ' + officer.office,
-            'phone_no': officer.phone_no
-        })
-    return data
-
-def add_officers_table(officers):
-    officer_data = create_data(officers)
+def add_officers_table(ac_no):
+    officer_data = get_officers(ac_no)
+    print(officer_data)
     # paragraph_before = doc.add_paragraph()
     # paragraph_before.paragraph_format.space_before = Pt(10)
 
@@ -119,6 +107,38 @@ def add_officers_table(officers):
 
     for cell in hdr_cells:
         cell.paragraphs[0].runs[0].bold = True
+
+    for i, ps in enumerate(officer_data, start=1):
+        row_cells = table.add_row().cells
+        row_cells[0].text = str(i)
+        row_cells[0].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[0].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[0].paragraphs[0].paragraph_format.space_after = Pt(2)
+
+        row_cells[1].text = ps.polling_station_code + ' ' + PollingStation.query.filter_by(ps_code=ps.polling_station_code).first().ps_name
+        row_cells[1].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[1].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[1].paragraphs[0].paragraph_format.space_after = Pt(2)
+
+        row_cells[2].text = ps.presiding_officer if ps.presiding_officer else ''
+        row_cells[2].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[2].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[2].paragraphs[0].paragraph_format.space_after = Pt(2)
+
+        row_cells[3].text = ps.polling_officer_1 if ps.polling_officer_1 else ''
+        row_cells[3].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[3].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[3].paragraphs[0].paragraph_format.space_after = Pt(2)
+
+        row_cells[4].text = ps.micro_observers if ps.micro_observers else ''
+        row_cells[4].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[4].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[4].paragraphs[0].paragraph_format.space_after = Pt(2)
+
+        row_cells[5].text = ps.block_level_officer if ps.block_level_officer else ''
+        row_cells[5].vertical_alignment = WD_ALIGN_VERTICAL.CENTER
+        row_cells[5].paragraphs[0].paragraph_format.space_before = Pt(2)
+        row_cells[5].paragraphs[0].paragraph_format.space_after = Pt(2)  
 
     
     # Set the width of the first column

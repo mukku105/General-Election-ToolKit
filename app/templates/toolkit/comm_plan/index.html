@@ -164,12 +164,12 @@
                     {% for officer in ps_election_officers %}
                     <tr>
                         <td><Strong>{{ loop.index }}</Strong></td>
-                        <td>{{officer.ps_code}}</td>
+                        <td>{{officer.polling_station_code}}</td>
                         <td>{{officer.ps_name}}</td>
                         <td>{{officer.presiding_officer}}</td>
                         <td>{{officer.polling_officer_1}}</td>
                         <td>{{officer.micro_observers}}</td>
-                        <td>{{officer.blo}}</td>
+                        <td>{{officer.block_level_officer}}</td>
                         <td style="width: 10px;">
                             <button class="btn btn-outline-info btn-sm">
                                 <img src="{{ url_for('static', filename='img/icons/pencil-square.svg') }}" alt="edit"

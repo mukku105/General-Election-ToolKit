@@ -20,6 +20,9 @@ class PollingStation(db.Model):
     electors_other = db.Column(db.Integer)
     electors_total = db.Column(db.Integer)
 
+    ps_election_officers = db.relationship('PsElectionOfficer', backref='polling_station', lazy=True)
+    voters_turnouts = db.relationship('VotersTurnout', backref='polling_station', lazy=True)
+
     last_updated = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
