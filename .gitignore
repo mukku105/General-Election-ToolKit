@@ -1,2 +1,3 @@
 __pycache__
 db
+app/static/generated_file/comm_plan/*.docx

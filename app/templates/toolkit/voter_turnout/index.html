@@ -26,6 +26,9 @@
                 <h2 class="accordion-header" id="heading{{ loop.index }}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ps.assembly_const_no}}-{{ps.part_no}}">
                         {{ ps.ps_code}} - {{ps.ps_name }} 
+                        {% if ps.is_sangha %}
+                        <span class="badge bg-danger m-2">Sangha</span>
+                        {% endif %}
                         <span class="border rounded m-2 p-2 bg-light">
                             Actual Voters:
                             <span class="badge bg-secondary" data-m-voters="{{ ps.electors_male }}">M: {{ ps.electors_male }}</span>
@@ -104,6 +107,46 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">Sangha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
@@ -160,6 +203,46 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">Sangha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
@@ -216,6 +299,46 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">Sangha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
@@ -272,6 +395,46 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">Sangha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
@@ -328,73 +491,56 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">Sangha</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
                         <!--6 7PM AC-->
                         <div class="table-responsive">
-                            <h5>(CLOSE OF POLL - AC)</h5>
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Male</th>
-                                        <th>M %</th>
-                                        <th>Female</th>
-                                        <th>F %</th>
-                                        <th>Other</th>
-                                        <th>O %</th>
-                                        <th>Total</th>
-                                        <th>Total %</th>
-                                        <th>action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->                                    
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
-                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--7PM Sangha-->
-                        <div class="table-responsive">
-                            <h5>(CLOSE OF POLL - SANGHA)
+                            <h5>(CLOSE OF POLL - AC)
                                 <span>
                                     <button class="btn btn-outline-secondary calc-sangha-btn" type="button">Calc. from AC - PC</button>
                                 </span>
                             </h5>
-                            
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
@@ -445,6 +591,46 @@
                                             <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
+                                    {% if ps.is_sangha %}
+                                    <tr>
+                                        <td class="bg-danger text-center" style="font-size:1.3rem; font-weight: bold; color: white;" colspan="9">CLOSE OF POLL - SANGHA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
