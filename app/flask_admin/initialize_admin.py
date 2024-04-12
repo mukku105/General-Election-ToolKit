@@ -89,11 +89,15 @@ class PostAdmin(AdminProtectedModelView):
 class PollingStationAdmin(AdminProtectedModelView):
     column_list = ('id', 'assembly_const_no', 'part_no', 'part_name', 
                    'ps_no', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
-                   'electors_male', 'electors_female', 'electors_other', 'electors_total')
+                   'electors_male', 'electors_female', 'electors_other', 'electors_total',
+                   'is_sangha',
+                   'electors_male_sangha', 'electors_female_sangha', 'electors_other_sangha', 'electors_total_sangha',)
     # form = PollingStationForm
     form_columns = ('assembly_const_no', 'part_no', 'part_name', 
                    'ps_no', 'ps_name', 'ps_type', 'ps_category', 'location_type', 
                    'electors_male', 'electors_female', 'electors_other', 'electors_total',
+                   'is_sangha',
+                   'electors_male_sangha', 'electors_female_sangha', 'electors_other_sangha', 'electors_total_sangha',
                    'last_updated', 'created_at')
     column_searchable_list = ('part_name', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type')
     column_filters = ('part_name', 'ps_code', 'ps_name', 'ps_type', 'ps_category', 'location_type')
@@ -102,7 +106,7 @@ class PollingStationAdmin(AdminProtectedModelView):
     #     return model.assembly_const.ac_name
 
     def on_model_change(self, form, model, is_created):
-        PollingStation.ps_code = f'{(model.assembly_const_no if model.assembly_const_no > 10 else '0' + model.assembly_const_no)}/{model.part_no}'
+        PollingStation.ps_code = f"{(model.assembly_const_no if int(model.assembly_const_no) > 9 else '0' + str(model.assembly_const_no))}/{model.part_no}"
 
     # column_formatters = {
     #     'assembly_const_no': _ac_formatter

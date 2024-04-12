@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block content %}
+<div id="overlay-spinner" class="spinner-overlay">
+    <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
     <div class="mt-2 mb-4 d-flex justify-content-between align-items-center">
         <h1 class="display-6">Voters Turnout Details</h1>
         <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importExcelModal">
@@ -38,8 +43,15 @@
                     </button>
                 </h2>
                 <div id="collapse-{{ps.assembly_const_no}}-{{ps.part_no}}" class="accordion-collapse collapse" data-bs-parent="#accordian-voter-turnout">
-                    <div class="accordion-body">
-                        <!--9AM-->
+                    <div class="accordion-body" data-ps-code="{{ ps.ps_code }}" data-ac-no="{{ ps.assembly_const_no }}" data-part-no="{{ ps.part_no }}">
+                        <!-- action btn div content right-->
+                        <div class="d-flex justify-content-center bg-light rounded">
+                            <button class="btn btn-lg btn-outline-warning m-1 reload-turnout-btn">Reload</button>
+                            <button class="btn btn-lg btn-outline-info m-1 update-turnout-btn">Update</button>
+                        </div>
+                        <hr>
+
+                        <!--1 9AM-->
                         <div class="table-responsive">
                             <h5>9 AM</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -88,14 +100,14 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--11AM-->
+                        <!--2 11AM-->
                         <div class="table-responsive">
                             <h5>11 AM</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -144,14 +156,14 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--1PM-->
+                        <!--3 1PM-->
                         <div class="table-responsive">
                             <h5>01 PM</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -200,14 +212,14 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--3PM-->
+                        <!--4 3PM-->
                         <div class="table-responsive">
                             <h5>03 PM</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -256,14 +268,14 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--5PM-->
+                        <!--5 5PM-->
                         <div class="table-responsive">
                             <h5>05 PM</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -312,70 +324,14 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--7PM Sangha-->
-                        <div class="table-responsive">
-                            <h5>(CLOSE OF POLL - SANGHA)</h5>
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Male</th>
-                                        <th>M %</th>
-                                        <th>Female</th>
-                                        <th>F %</th>
-                                        <th>Other</th>
-                                        <th>O %</th>
-                                        <th>Total</th>
-                                        <th>Total %</th>
-                                        <th>action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->                                    
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <!-- input voter count -->
-                                            
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--7PM AC-->
+                        <!--6 7PM AC-->
                         <div class="table-responsive">
                             <h5>(CLOSE OF POLL - AC)</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -424,14 +380,75 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <!--7PM PC-->
+                        <!--7PM Sangha-->
+                        <div class="table-responsive">
+                            <h5>(CLOSE OF POLL - SANGHA)
+                                <span>
+                                    <button class="btn btn-outline-secondary calc-sangha-btn" type="button">Calc. from AC - PC</button>
+                                </span>
+                            </h5>
+                            
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Male</th>
+                                        <th>M %</th>
+                                        <th>Female</th>
+                                        <th>F %</th>
+                                        <th>Other</th>
+                                        <th>O %</th>
+                                        <th>Total</th>
+                                        <th>Total %</th>
+                                        <th>action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="number" class="form-control" name="male_voter_count" placeholder="">
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->                                    
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="female_voter_count" placeholder="">                                           
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="other_voter_count" placeholder="">
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <!-- input voter count -->
+                                            
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--pc 7PM PC-->
                         <div class="table-responsive">
                             <h5>(CLOSE OF POLL - PC)</h5>
                             <table class="table table-bordered table-striped table-hover">
@@ -480,8 +497,8 @@
                                             
                                         </td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Update</button>
-                                            <button class="btn btn-sm btn-warning">Reload</button>
+                                            <button class="btn btn-sm btn-warning reload-turnout-btn mb-1">Reload</button><br>
+                                            <button class="btn btn-sm btn-info update-turnout-btn">Update</button>
                                         </td>
                                     </tr>
                                 </tbody>

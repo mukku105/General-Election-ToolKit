@@ -78,12 +78,12 @@ def ps_import():
             ac_no = role.name.split('ac_')[1]
             break
     if 'file' not in request.files:
-        return jsonify({'msg': 'No file part'}), 400
+        return jsonify({'status':'error', 'msg': 'No file part'}), 400
     file = request.files['file']
     if file.filename == '':
-        return jsonify({'msg': 'No selected file'}), 400
+        return jsonify({'status':'error', 'msg': 'No selected file'}), 400
     if not file.filename.endswith('.xlsx'):
-        return jsonify({'msg': 'Invalid file extension'}), 400
+        return jsonify({'status':'error', 'msg': 'Invalid file extension'}), 400
     
     df = pd.read_excel(file)
 
@@ -108,4 +108,4 @@ def ps_import():
 
             db.session.add(p)
     db.session.commit()
-    return jsonify({'msg': 'Data imported successfully'}), 200
+    return jsonify({'status':'success', 'msg': 'Data imported successfully'}), 200

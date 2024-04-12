@@ -24,10 +24,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url_for('toolkit.ps_import') }}" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" id="file">
-                        <button type="submit" class="btn btn-primary">Import</button>
-                    </form>
+                    <input id="file-import-ps" type="file" name="file" id="file">
+                    <button id="import-ps-excel-btn" data-api-url="{{ url_for('toolkit.ps_import') }}" type="submit" class="btn btn-primary">Import</button>
                 </div>
             </div>
         </div>
@@ -50,6 +48,7 @@
                     <th data-sortable="true">PS<br>TYPE</th>
                     <th data-sortable="true">PS<br>CATEGORY</th>
                     <th data-sortable="true">LOC<br>TYPE</th>
+                    <th data-sortable="true">IS<br>Sangha</th>
                     <th data-sortable="true">ELECTORS<br>MALE</th>
                     <th data-sortable="true">ELECTORS<br>FEMALE</th>
                     <th data-sortable="true">ELECTORS<br>OTHER</th>
@@ -69,6 +68,52 @@
                         <td>{{ ps.ps_type }}</td>
                         <td>{{ ps.ps_category }}</td>
                         <td>{{ ps.location_type }}</td>
+                        <td>{% if ps.is_sangha %}
+                            <div class="modal fade" id="sanghaModal{{ ps.id }}" tabindex="-1" aria-labelledby="sanghaModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="sanghaModalLabel">Sangha Electors Details</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-striped table-hover table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-sortable="true">ELECTORS<br>MALE</th>
+                                                        <th data-sortable="true">ELECTORS<br>FEMALE</th>
+                                                        <th data-sortable="true">ELECTORS<br>OTHER</th>
+                                                        <th data-sortable="true">ELECTORS<br>TOTAL</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{ ps.electors_male_sangha }}</td>
+                                                        <td>{{ ps.electors_female_sangha }}</td>
+                                                        <td>{{ ps.electors_other_sangha }}</td>
+                                                        <td>{{ ps.electors_total_sangha }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#sanghaModal{{ ps.id }}">
+                                <img src="{{ url_for('static', filename='img/icons/eye.svg') }}" 
+                                        alt="view" 
+                                        style="width: 17px; height: 17px;">
+                            </button>
+
+
+                            {% else %}
+                            <button type="button" class="btn btn-danger" disabled>
+                                <img src="{{ url_for('static', filename='img/icons/x-circle.svg') }}" 
+                                        alt="view" 
+                                        style="width: 17px; height: 17px; fill: white;">
+                            </button>
+                            {% endif %}
+                        </td>
                         <td>{{ ps.electors_male }}</td>
                         <td>{{ ps.electors_female }}</td>
                         <td>{{ ps.electors_other }}</td>

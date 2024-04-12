@@ -20,6 +20,12 @@ class PollingStation(db.Model):
     electors_other = db.Column(db.Integer)
     electors_total = db.Column(db.Integer)
 
+    is_sangha = db.Column(db.Boolean, default=False)
+    electors_male_sangha = db.Column(db.Integer)
+    electors_female_sangha = db.Column(db.Integer)
+    electors_other_sangha = db.Column(db.Integer)
+    electors_total_sangha = db.Column(db.Integer)
+
     ps_election_officers = db.relationship('PsElectionOfficer', backref='polling_station', lazy=True)
     voters_turnouts = db.relationship('VotersTurnout', backref='polling_station', lazy=True)
 
