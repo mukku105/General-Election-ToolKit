@@ -83,6 +83,40 @@ $(document).ready(function() {
         });
     })
 
+    $('.calc-ac-sangha-btn').click(function() {
+        let ac_close_poll_table = $(this).closest('.accordion-body').find('.table-responsive')[5];
+        let ac_close_poll_table_tr = $(ac_close_poll_table).find('table tbody tr');
+        let ac_close_poll_table_tr_inp = $(ac_close_poll_table_tr[0]).find('td input');
+
+        let sangha_close_poll_table = $(this).closest('.accordion-body').find('.table-responsive')[5];
+        let sangha_close_poll_table_tr = $(sangha_close_poll_table).find('table tbody tr');
+        let sangha_close_poll_table_tr_inp = $(sangha_close_poll_table_tr[2]).find('td input');
+
+        let current_pc_close_poll_table = $(this).closest('.card-body').find('table')[0];
+        let current_pc_close_poll_table_tr = $(current_pc_close_poll_table).find('tbody tr');
+        let current_pc_close_poll_table_tr_inp = $(current_pc_close_poll_table_tr[0]).find('td input');
+
+        current_pc_close_poll_table_tr_inp[0].value = parseInt(ac_close_poll_table_tr_inp[0].value) + parseInt(sangha_close_poll_table_tr_inp[0].value);
+        current_pc_close_poll_table_tr_inp[1].value = parseInt(ac_close_poll_table_tr_inp[1].value) + parseInt(sangha_close_poll_table_tr_inp[1].value);
+        current_pc_close_poll_table_tr_inp[2].value = parseInt(ac_close_poll_table_tr_inp[2].value) + parseInt(sangha_close_poll_table_tr_inp[2].value);
+    })
+
+    $('.copy-ac-btn').click(function() {
+        let ac_close_poll_table = $(this).closest('.accordion-body').find('.table-responsive')[5];
+        let ac_close_poll_table_tr = $(ac_close_poll_table).find('table tbody tr');
+        let ac_close_poll_table_tr_inp = $(ac_close_poll_table_tr[0]).find('td input');
+
+        let current_pc_close_poll_table = $(this).closest('.card-body').find('table')[0];
+        let current_pc_close_poll_table_tr = $(current_pc_close_poll_table).find('tbody tr');
+        let current_pc_close_poll_table_tr_inp = $(current_pc_close_poll_table_tr[0]).find('td input');
+
+        current_pc_close_poll_table_tr_inp[0].value = ac_close_poll_table_tr_inp[0].value;
+        current_pc_close_poll_table_tr_inp[1].value = ac_close_poll_table_tr_inp[1].value;
+        current_pc_close_poll_table_tr_inp[2].value = ac_close_poll_table_tr_inp[2].value;
+
+    })
+
+
     $('.calc-sangha-btn').click(function() {
         let accordionBody = $(this).closest('.accordion-body')
         let voters_turnout_ac = accordionBody.find(".table-responsive")[5]
@@ -147,6 +181,7 @@ $(document).ready(function() {
                 if (response.status == 'success') {
                     alert(response.msg);
                     fetch_voters_turnout_data(acNo, psCode);
+                    fetch_ac_voters_turnout_data(acNo);
                 } else {
                     alert('Error in Updating Voters Turnout Data');
                 }
@@ -164,7 +199,54 @@ $(document).ready(function() {
         console.log('Voters Turnout Page');
         let ac_no = $('#ac-no').attr('data-ac-no');
         console.log('AC NO - ' + ac_no);
+        fetch_ac_voters_turnout_data(ac_no);
         fetch_voters_turnout_data(ac_no);
+    }
+
+    function fetch_ac_voters_turnout_data(ac_no) {
+        $('#overlay-spinner').show();
+        console.log('Fetching AC Voters Turnout Data');
+
+        $.ajax({
+            type: 'GET',
+            url: '/toolkit/voters_turnout/get_ac_turnout?ac_no=' + ac_no,
+            success: function(response) {
+                console.log(response);
+                if (response.status == 'success') {
+                    let ac_electors_badge = $('#ac-voters-turnout #ac-electors').find('.badge');
+
+
+                    ac_electors_badge[0].innerHTML = 'M: ' + response.data['total_electors']['male']
+                    ac_electors_badge[1].innerHTML = 'F: ' + response.data['total_electors']['female']
+                    ac_electors_badge[2].innerHTML = 'O: ' + response.data['total_electors']['other']
+                    ac_electors_badge[3].innerHTML = 'T: ' + response.data['total_electors']['total']
+                    ac_electors_badge[4].innerHTML = 'Sg.T: ' + response.data['total_electors_sangha']['total']
+
+                    let ac_turnout_badge = $('#ac-voters-turnout #ac-turnout').find('.badge');
+                    let pc_turnout_badge = $('#ac-voters-turnout #pc-turnout').find('.badge');
+                    let sangha_turnout_badge = $('#ac-voters-turnout #sangha-turnout').find('.badge');
+
+                    $('#ac-voters-turnout #ac-turnout').find('h5 span')[0].innerHTML ='<mark class="rounded">' + response.data['total_turnout_current_ac'] + '</mark>';
+                    $('#ac-voters-turnout #sangha-turnout').find('h5 span')[0].innerHTML ='<mark class="rounded">' + response.data['total_turnout_current_ac_sangha'] + '</mark>';
+                    $('#ac-voters-turnout #pc-turnout').find('h5 span')[0].innerHTML ='<mark class="rounded">' + response.data['total_turnout_current_pc'] + '</mark>';
+
+                    ac_turnout_badge[3].innerHTML = response.data['total_turnout_current_ac_percent'] + '%'
+                    pc_turnout_badge[3].innerHTML = response.data['total_turnout_current_pc_percent'] + '%'
+                    sangha_turnout_badge[3].innerHTML = response.data['total_turnout_current_ac_sangha_percent'] + '%'
+
+                } else {
+                    console.log('Error in Fetching AC Voters Turnout Data');
+                }
+                $('#overlay-spinner').hide();
+
+            },
+            error: function(error) {
+                $('#overlay-spinner').hide();
+                console.log(error);
+                console.log('Error in Fetching AC Voters Turnout Data');
+            }
+        });
+
     }
 
     function fetch_voters_turnout_data(ac_no, ps_code) {

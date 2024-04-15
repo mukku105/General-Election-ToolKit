@@ -6,23 +6,29 @@ from app.extensions import db
 from app.models.user import User
 from app.models.polling_station import PollingStation
 from app.models.voters_turnout import VotersTurnout
+from sqlalchemy import func, text
+from sqlalchemy.orm import Session
+from app.helper import calc_ac_turnout
+
 import pandas as pd
 
 @bp.route('/voters_turnout', methods=['GET', 'POST'])
 @login_required
 def voters_turnout():
     p_station = PollingStation.query.all()
+    assembly_const = None
     for role in current_user.roles:
         if role.name.startswith('ac_'):
             ac_no = role.name.split('ac_')[1]
             print(ac_no)
             p_station = PollingStation.query.filter_by(assembly_const_no=ac_no).all()
+            assembly_const = AssemblyConst.query.get(ac_no)
             # p_station = VotersTurnout.query.join(PollingStation).filter(PollingStation.assembly_const_no==ac_no).all()
             break
 
     print(p_station)
 
-    return render_template('toolkit/voter_turnout/index.html', p_station=p_station)
+    return render_template('toolkit/voter_turnout/index.html', p_station=p_station, assembly_const=assembly_const)
 
 @bp.route('/voters_turnout/get_data', methods=['GET', 'POST'])
 @login_required
@@ -274,3 +280,13 @@ def voters_turnout_update():
     response['msg'] = 'Data Updated Successfully'
 
     return jsonify(response), 200
+
+
+@bp.route('/voters_turnout/get_ac_turnout', methods=['GET'])
+@login_required
+def get_ac_turnout():
+    ac_no = request.args.get('ac_no')
+    response_data = calc_ac_turnout.calc_ac_turnout(ac_no)
+
+    return jsonify(response_data), 200
+

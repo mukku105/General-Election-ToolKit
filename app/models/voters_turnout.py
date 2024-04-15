@@ -318,18 +318,19 @@ class VotersTurnout(db.Model):
     
     
 
+    # Current Turnout for AC
     @hybrid_property
     def current_turnout_male(self):
-        return ((self.turnout_male_1 + self.turnout_male_2 + self.turnout_male_3 + self.turnout_male_4 + self.turnout_male_6)/self.polling_station.electors_male) * 100 if self.polling_station.electors_male > 0 else 0
+        return (max(self.turnout_male_1, self.turnout_male_2, self.turnout_male_3, self.turnout_male_4, self.turnout_male_6)/self.polling_station.electors_male) * 100 if self.polling_station.electors_male > 0 else 0
     @hybrid_property
     def current_turnout_female(self):
-        return ((self.turnout_female_1 + self.turnout_female_2 + self.turnout_female_3 + self.turnout_female_4 + self.turnout_female_6)/self.polling_station.electors_female) * 100 if self.polling_station.electors_female > 0 else 0
+        return (max(self.turnout_female_1, self.turnout_female_2, self.turnout_female_3, self.turnout_female_4, self.turnout_female_6)/self.polling_station.electors_female) * 100 if self.polling_station.electors_female > 0 else 0
     @hybrid_property
     def current_turnout_other(self):
-        return ((self.turnout_other_1 + self.turnout_other_2 + self.turnout_other_3 + self.turnout_other_4 + self.turnout_other_6)/self.polling_station.electors_other) * 100 if self.polling_station.electors_other > 0 else 0
+        return (max(self.turnout_other_1, self.turnout_other_2, self.turnout_other_3, self.turnout_other_4, self.turnout_other_6)/self.polling_station.electors_other) * 100 if self.polling_station.electors_other > 0 else 0
     @hybrid_property
     def current_turnout_total(self):
-        return ((self.total_turnout_1 + self.total_turnout_2 + self.total_turnout_3 + self.total_turnout_4 + self.total_turnout_6)/self.polling_station.electors_total) * 100 if self.polling_station.electors_total > 0 else 0
+        return (max(self.total_turnout_1, self.total_turnout_2, self.total_turnout_3, self.total_turnout_4, self.total_turnout_6)/self.polling_station.electors_total) * 100 if self.polling_station.electors_total > 0 else 0
 
 
 
