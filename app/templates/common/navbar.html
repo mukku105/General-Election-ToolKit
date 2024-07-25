@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a id="voter-turnout-nav" class="nav-link" href="{{ url_for('toolkit.voters_turnout') }}">Voter Turnout</a>
                 </li>
+                <li class="nav-item bg-dark rounded">
+                    <a id="counting-day-nav" class="nav-link text-light btn btn-outline-success" href="{{ url_for('toolkit.voters_turnout') }}">Counting Day</a>
+                </li>
                 {% if current_user.has_role('admin') %}
                     {% include 'common/nav_item_admin.html' %}
                 {% endif %}
